@@ -27,12 +27,11 @@
     overflow-x: hidden;
   }
 
-  /* Background grid */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: 
+    background-image:
       linear-gradient(rgba(245,200,66,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(245,200,66,0.03) 1px, transparent 1px);
     background-size: 40px 40px;
@@ -42,7 +41,6 @@
 
   .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-  /* Header */
   header {
     padding: 48px 0 32px;
     border-bottom: 1px solid var(--border);
@@ -56,8 +54,6 @@
     gap: 24px;
     flex-wrap: wrap;
   }
-
-  .logo-block {}
 
   .course-tag {
     display: inline-block;
@@ -81,10 +77,7 @@
     letter-spacing: -1px;
   }
 
-  h1 span {
-    color: var(--accent);
-    display: block;
-  }
+  h1 span { color: var(--accent); display: block; }
 
   .subtitle {
     margin-top: 12px;
@@ -121,44 +114,34 @@
     box-shadow: 0 8px 24px rgba(245,200,66,0.3);
   }
 
-  /* Stats bar */
-  .stats-bar {
+  /* Breadcrumb */
+  .breadcrumb {
     display: flex;
-    gap: 32px;
-    margin-bottom: 40px;
-    padding: 20px 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    font-size: 13px;
+    color: var(--muted);
     flex-wrap: wrap;
   }
 
-  .stat {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .stat-value {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
+  .breadcrumb-item {
+    cursor: pointer;
     color: var(--accent);
+    transition: opacity 0.2s;
   }
 
-  .stat-label {
-    font-size: 12px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+  .breadcrumb-item:hover { opacity: 0.7; }
+  .breadcrumb-sep { color: var(--border); }
+  .breadcrumb-current { color: var(--muted); cursor: default; }
 
-  /* Search & Filter */
+  /* Filter buttons */
   .controls {
     display: flex;
     gap: 12px;
     margin-bottom: 32px;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .search-wrap {
@@ -217,14 +200,56 @@
     background: rgba(245,200,66,0.08);
   }
 
-  /* File grid */
+  /* Grid */
   .files-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 16px;
     margin-bottom: 48px;
   }
 
+  /* Folder card */
+  .folder-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .folder-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    background: rgba(245,200,66,0.05);
+  }
+
+  .folder-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .folder-info { flex: 1; }
+
+  .folder-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .folder-meta {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* File card */
   .file-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -256,8 +281,7 @@
   }
 
   .file-icon {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -300,40 +324,40 @@
   .file-meta {
     font-size: 12px;
     color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
 
-  .file-meta span { display: flex; align-items: center; gap: 4px; }
+  .file-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+  }
 
-  .download-btn {
+  .action-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 10px;
+    gap: 6px;
+    flex: 1;
+    padding: 9px;
     background: transparent;
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--text);
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s;
-    margin-top: auto;
   }
 
-  .download-btn:hover {
+  .action-btn:hover {
     background: var(--accent);
     border-color: var(--accent);
     color: #0a0a0f;
     font-weight: 500;
   }
 
-  /* Loading & Empty states */
+  /* State boxes */
   .state-box {
     grid-column: 1 / -1;
     display: flex;
@@ -356,10 +380,43 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .state-box p { font-size: 15px; }
-  .state-box small { font-size: 13px; color: var(--muted); opacity: 0.6; }
+  /* Back button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 24px;
+  }
 
-  /* Footer */
+  .back-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Section title */
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title span {
+    color: var(--accent);
+  }
+
   footer {
     border-top: 1px solid var(--border);
     padding: 24px 0;
@@ -370,7 +427,6 @@
 
   footer a { color: var(--accent); text-decoration: none; }
 
-  /* Error banner */
   .error-banner {
     background: rgba(232,93,58,0.1);
     border: 1px solid rgba(232,93,58,0.3);
@@ -400,32 +456,45 @@
     </div>
   </header>
 
-  <div class="stats-bar" id="statsBar">
-    <div class="stat"><span class="stat-value" id="totalFiles">—</span><span class="stat-label">Файла</span></div>
-    <div class="stat"><span class="stat-value" id="totalFolders">—</span><span class="stat-label">Папки</span></div>
-    <div class="stat"><span class="stat-value" id="lastUpdate">—</span><span class="stat-label">Последна промяна</span></div>
-  </div>
-
   <div class="error-banner" id="errorBanner">
-    ⚠️ Грешка при зареждане на файловете. <a href="#" onclick="loadFiles()">Опитай отново</a>
+    ⚠️ Грешка при зареждане. <a href="#" onclick="init()">Опитай отново</a>
   </div>
 
-  <div class="controls">
-    <div class="search-wrap">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="search" id="searchInput" placeholder="Търси файл..." oninput="filterFiles()">
+  <div id="mainView">
+    <!-- Folders view -->
+    <div id="foldersSection">
+      <div class="section-title">📁 Папки по дати</div>
+      <div class="files-grid" id="foldersGrid">
+        <div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>
+      </div>
     </div>
-    <div class="filter-btns" id="filterBtns">
-      <button class="filter-btn active" onclick="setFilter('all', this)">Всички</button>
-      <button class="filter-btn" onclick="setFilter('pdf', this)">PDF</button>
-      <button class="filter-btn" onclick="setFilter('docx', this)">Word</button>
-      <button class="filter-btn" onclick="setFilter('pptx', this)">PowerPoint</button>
-      <button class="filter-btn" onclick="setFilter('xlsx', this)">Excel</button>
-    </div>
-  </div>
 
-  <div class="files-grid" id="filesGrid">
-    <div class="state-box"><div class="spinner"></div><p>Зареждане на файловете…</p></div>
+    <!-- Files view (inside folder) -->
+    <div id="filesSection" style="display:none">
+      <button class="back-btn" onclick="showFolders()">
+        ← Назад към папките
+      </button>
+
+      <div class="section-title" id="folderTitle">📂 <span></span></div>
+
+      <div class="controls">
+        <div class="search-wrap">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" id="searchInput" placeholder="Търси файл..." oninput="filterFiles()">
+        </div>
+        <div class="filter-btns" id="filterBtns">
+          <button class="filter-btn active" onclick="setFilter('all', this)">Всички</button>
+          <button class="filter-btn" onclick="setFilter('pdf', this)">PDF</button>
+          <button class="filter-btn" onclick="setFilter('docx', this)">Word</button>
+          <button class="filter-btn" onclick="setFilter('pptx', this)">PowerPoint</button>
+          <button class="filter-btn" onclick="setFilter('xlsx', this)">Excel</button>
+        </div>
+      </div>
+
+      <div class="files-grid" id="filesGrid">
+        <div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -435,49 +504,108 @@
 </div>
 
 <script>
-  const FOLDER_ID = '1CbSAvw4hsCsamx6NsybKZ3rQ-tuTfxA1';
-  const API_KEY   = 'AIzaSyADiLlwS8Vvy4-n8BN9nuWbJFBuPfMBF-Y';
-
-  let allFiles = [];
-  let activeFilter = 'all';
+  // ======= КОНФИГУРАЦИЯ =======
+  const ROOT_FOLDER_ID = '1CbSAvw4hsCsamx6NsybKZ3rQ-tuTfxA1';
+  const API_KEY = 'AIzaSyADiLlwS8Vvy4-n8BN9nuWbJFBuPfMBF-Y';
+  // ============================
 
   const ICONS = { pdf:'📄', docx:'📝', doc:'📝', pptx:'📊', ppt:'📊', xlsx:'📈', xls:'📈', png:'🖼️', jpg:'🖼️', jpeg:'🖼️', mp4:'🎬', mp3:'🎵', zip:'📦' };
   const EXT_CLASS = { pdf:'pdf', docx:'docx', doc:'docx', pptx:'pptx', ppt:'pptx', xlsx:'xlsx', xls:'xlsx' };
 
-  function getExt(name) {
-    return (name.split('.').pop() || '').toLowerCase();
-  }
+  let allFiles = [];
+  let activeFilter = 'all';
+
+  function getExt(name) { return (name.split('.').pop() || '').toLowerCase(); }
 
   function formatDate(iso) {
     if (!iso) return '—';
-    const d = new Date(iso);
-    return d.toLocaleDateString('bg-BG', { day:'numeric', month:'short', year:'numeric' });
+    return new Date(iso).toLocaleDateString('bg-BG', { day:'numeric', month:'short', year:'numeric' });
   }
 
-  async function loadFiles() {
-    document.getElementById('filesGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
+  async function fetchDrive(folderId) {
+    const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+trashed=false&fields=files(id,name,mimeType,modifiedTime,webViewLink,webContentLink)&orderBy=name&key=${API_KEY}&pageSize=200`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.status);
+    return (await res.json()).files || [];
+  }
+
+  async function init() {
     document.getElementById('errorBanner').style.display = 'none';
+    document.getElementById('foldersGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
 
     try {
-      const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+trashed=false&fields=files(id,name,mimeType,size,modifiedTime,webViewLink,webContentLink)&orderBy=name&key=${API_KEY}&pageSize=200`;
-      const res  = await fetch(url);
-      if (!res.ok) throw new Error(res.status);
-      const data = await res.json();
+      // Load root folder contents
+      const rootItems = await fetchDrive(ROOT_FOLDER_ID);
+      const subFolders = rootItems.filter(f => f.mimeType === 'application/vnd.google-apps.folder');
 
-      allFiles = (data.files || []).filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
-      const folders = (data.files || []).filter(f => f.mimeType === 'application/vnd.google-apps.folder');
+      // If there are subfolders, load their subfolders too (1create1980 level)
+      let dateFolders = [];
+      if (subFolders.length > 0) {
+        for (const sf of subFolders) {
+          const items = await fetchDrive(sf.id);
+          const df = items.filter(f => f.mimeType === 'application/vnd.google-apps.folder');
+          if (df.length > 0) {
+            dateFolders = dateFolders.concat(df);
+          } else {
+            // The subfolder itself contains files — treat as date folder
+            dateFolders.push(sf);
+          }
+        }
+      }
 
-      document.getElementById('totalFiles').textContent = allFiles.length;
-      document.getElementById('totalFolders').textContent = folders.length;
+      // If no nested folders, treat root items directly
+      if (dateFolders.length === 0) {
+        dateFolders = subFolders;
+      }
 
-      const latest = allFiles.reduce((a,b) => new Date(b.modifiedTime) > new Date(a.modifiedTime) ? b : a, allFiles[0]);
-      document.getElementById('lastUpdate').textContent = latest ? formatDate(latest.modifiedTime) : '—';
-
-      renderFiles(allFiles);
+      renderFolders(dateFolders);
     } catch(e) {
       document.getElementById('errorBanner').style.display = 'block';
-      document.getElementById('filesGrid').innerHTML = '<div class="state-box"><p>Не можах да заредя файловете.</p><small>Провери API ключа или интернет връзката.</small></div>';
+      document.getElementById('foldersGrid').innerHTML = '<div class="state-box"><p>Грешка при зареждане.</p></div>';
     }
+  }
+
+  function renderFolders(folders) {
+    const grid = document.getElementById('foldersGrid');
+    if (!folders.length) {
+      grid.innerHTML = '<div class="state-box"><p>Няма намерени папки.</p></div>';
+      return;
+    }
+
+    grid.innerHTML = folders.map((f, i) => `
+      <div class="folder-card" style="animation-delay:${i*0.05}s" onclick="openFolder('${f.id}', '${f.name.replace(/'/g,"\\'")}')">
+        <div class="folder-icon">📂</div>
+        <div class="folder-info">
+          <div class="folder-name">${f.name}</div>
+          <div class="folder-meta">Промяна: ${formatDate(f.modifiedTime)}</div>
+        </div>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color:var(--muted);flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+    `).join('');
+  }
+
+  async function openFolder(folderId, folderName) {
+    document.getElementById('foldersSection').style.display = 'none';
+    document.getElementById('filesSection').style.display = 'block';
+    document.querySelector('#folderTitle span').textContent = folderName;
+    document.getElementById('filesGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
+    document.getElementById('searchInput').value = '';
+    activeFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-btn')[0].classList.add('active');
+
+    try {
+      const items = await fetchDrive(folderId);
+      allFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      renderFiles(allFiles);
+    } catch(e) {
+      document.getElementById('filesGrid').innerHTML = '<div class="state-box"><p>Грешка при зареждане на файловете.</p></div>';
+    }
+  }
+
+  function showFolders() {
+    document.getElementById('filesSection').style.display = 'none';
+    document.getElementById('foldersSection').style.display = 'block';
   }
 
   function renderFiles(files) {
@@ -488,11 +616,11 @@
     }
 
     grid.innerHTML = files.map((f, i) => {
-      const ext   = getExt(f.name);
-      const cls   = EXT_CLASS[ext] || 'other';
-      const icon  = ICONS[ext] || '📁';
-      const dl    = f.webContentLink || `https://drive.google.com/uc?export=download&id=${f.id}`;
-      const view  = f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`;
+      const ext  = getExt(f.name);
+      const cls  = EXT_CLASS[ext] || 'other';
+      const icon = ICONS[ext] || '📁';
+      const dl   = f.webContentLink || `https://drive.google.com/uc?export=download&id=${f.id}`;
+      const view = f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`;
 
       return `
         <div class="file-card" style="animation-delay:${i*0.04}s">
@@ -501,13 +629,17 @@
             <span class="file-type-badge badge-${cls}">${ext || 'файл'}</span>
           </div>
           <div class="file-name">${f.name}</div>
-          <div class="file-meta">
-            <span>🕐 ${formatDate(f.modifiedTime)}</span>
+          <div class="file-meta">🕐 ${formatDate(f.modifiedTime)}</div>
+          <div class="file-actions">
+            <a href="${view}" class="action-btn" target="_blank">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Виж
+            </a>
+            <a href="${dl}" class="action-btn" target="_blank" download>
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Свали
+            </a>
           </div>
-          <a href="${dl}" class="download-btn" target="_blank" download>
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Свали
-          </a>
         </div>`;
     }).join('');
   }
@@ -515,7 +647,15 @@
   function filterFiles() {
     const q = document.getElementById('searchInput').value.toLowerCase();
     let filtered = allFiles;
-    if (activeFilter !== 'all') filtered = filtered.filter(f => getExt(f.name) === activeFilter || (activeFilter === 'docx' && getExt(f.name) === 'doc') || (activeFilter === 'pptx' && getExt(f.name) === 'ppt') || (activeFilter === 'xlsx' && getExt(f.name) === 'xls'));
+    if (activeFilter !== 'all') {
+      filtered = filtered.filter(f => {
+        const ext = getExt(f.name);
+        if (activeFilter === 'docx') return ext === 'docx' || ext === 'doc';
+        if (activeFilter === 'pptx') return ext === 'pptx' || ext === 'ppt';
+        if (activeFilter === 'xlsx') return ext === 'xlsx' || ext === 'xls';
+        return ext === activeFilter;
+      });
+    }
     if (q) filtered = filtered.filter(f => f.name.toLowerCase().includes(q));
     renderFiles(filtered);
   }
@@ -527,7 +667,7 @@
     filterFiles();
   }
 
-  loadFiles();
+  init();
 </script>
 </body>
 </html>
