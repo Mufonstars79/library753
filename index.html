@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Библиотека — Автоинструктори Курс 753</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --card: #1a1a24;
+    --accent: #f5c842;
+    --accent2: #e85d3a;
+    --text: #f0ede8;
+    --muted: #7a7890;
+    --border: #2a2a38;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(245,200,66,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,200,66,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* Header */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .logo-block {}
+
+  .course-tag {
+    display: inline-block;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+  }
+
+  h1 span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .subtitle {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 300;
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  .drive-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+
+  .drive-btn:hover {
+    background: #ffd94d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(245,200,66,0.3);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 40px;
+    padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-value {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Search & Filter */
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+  }
+
+  input[type="search"] {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    padding: 12px 14px 12px 42px;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="search"]:focus { border-color: var(--accent); }
+  input[type="search"]::placeholder { color: var(--muted); }
+
+  .filter-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(245,200,66,0.08);
+  }
+
+  /* File grid */
+  .files-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .file-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .file-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  .file-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .file-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .file-icon.pdf  { background: rgba(232,93,58,0.15); }
+  .file-icon.docx { background: rgba(66,133,244,0.15); }
+  .file-icon.pptx { background: rgba(251,140,0,0.15); }
+  .file-icon.xlsx { background: rgba(52,168,83,0.15); }
+  .file-icon.other { background: rgba(120,120,160,0.15); }
+
+  .file-type-badge {
+    font-size: 10px;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .badge-pdf  { background: rgba(232,93,58,0.2); color: #e85d3a; }
+  .badge-docx { background: rgba(66,133,244,0.2); color: #4285f4; }
+  .badge-pptx { background: rgba(251,140,0,0.2); color: #fb8c00; }
+  .badge-xlsx { background: rgba(52,168,83,0.2); color: #34a853; }
+  .badge-other { background: rgba(120,120,160,0.2); color: #9090b0; }
+
+  .file-name {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text);
+    flex: 1;
+    word-break: break-word;
+  }
+
+  .file-meta {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .file-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-top: auto;
+  }
+
+  .download-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0a0f;
+    font-weight: 500;
+  }
+
+  /* Loading & Empty states */
+  .state-box {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    gap: 16px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .state-box p { font-size: 15px; }
+  .state-box small { font-size: 13px; color: var(--muted); opacity: 0.6; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* Error banner */
+  .error-banner {
+    background: rgba(232,93,58,0.1);
+    border: 1px solid rgba(232,93,58,0.3);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: #e85d3a;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="course-tag">Курс № 753</div>
+        <h1>Библиотека<span>Автоинструктори</span></h1>
+        <p class="subtitle">Учебни материали, документи и ресурси за курса.</p>
+      </div>
+      <a href="https://drive.google.com/drive/folders/1CbSAvw4hsCsamx6NsybKZ3rQ-tuTfxA1" target="_blank" class="drive-btn">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Отвори в Drive
+      </a>
+    </div>
+  </header>
+
+  <div class="stats-bar" id="statsBar">
+    <div class="stat"><span class="stat-value" id="totalFiles">—</span><span class="stat-label">Файла</span></div>
+    <div class="stat"><span class="stat-value" id="totalFolders">—</span><span class="stat-label">Папки</span></div>
+    <div class="stat"><span class="stat-value" id="lastUpdate">—</span><span class="stat-label">Последна промяна</span></div>
+  </div>
+
+  <div class="error-banner" id="errorBanner">
+    ⚠️ Грешка при зареждане на файловете. <a href="#" onclick="loadFiles()">Опитай отново</a>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" id="searchInput" placeholder="Търси файл..." oninput="filterFiles()">
+    </div>
+    <div class="filter-btns" id="filterBtns">
+      <button class="filter-btn active" onclick="setFilter('all', this)">Всички</button>
+      <button class="filter-btn" onclick="setFilter('pdf', this)">PDF</button>
+      <button class="filter-btn" onclick="setFilter('docx', this)">Word</button>
+      <button class="filter-btn" onclick="setFilter('pptx', this)">PowerPoint</button>
+      <button class="filter-btn" onclick="setFilter('xlsx', this)">Excel</button>
+    </div>
+  </div>
+
+  <div class="files-grid" id="filesGrid">
+    <div class="state-box"><div class="spinner"></div><p>Зареждане на файловете…</p></div>
+  </div>
+
+  <footer>
+    Библиотека Автоинструктори · Курс 753 ·
+    <a href="https://drive.google.com/drive/folders/1CbSAvw4hsCsamx6NsybKZ3rQ-tuTfxA1" target="_blank">Google Drive</a>
+  </footer>
+</div>
+
+<script>
+  const FOLDER_ID = '1CbSAvw4hsCsamx6NsybKZ3rQ-tuTfxA1';
+  const API_KEY   = 'AIzaSyADiLlwS8Vvy4-n8BN9nuWbJFBuPfMBF-Y';
+
+  let allFiles = [];
+  let activeFilter = 'all';
+
+  const ICONS = { pdf:'📄', docx:'📝', doc:'📝', pptx:'📊', ppt:'📊', xlsx:'📈', xls:'📈', png:'🖼️', jpg:'🖼️', jpeg:'🖼️', mp4:'🎬', mp3:'🎵', zip:'📦' };
+  const EXT_CLASS = { pdf:'pdf', docx:'docx', doc:'docx', pptx:'pptx', ppt:'pptx', xlsx:'xlsx', xls:'xlsx' };
+
+  function getExt(name) {
+    return (name.split('.').pop() || '').toLowerCase();
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('bg-BG', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  async function loadFiles() {
+    document.getElementById('filesGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
+    document.getElementById('errorBanner').style.display = 'none';
+
+    try {
+      const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+trashed=false&fields=files(id,name,mimeType,size,modifiedTime,webViewLink,webContentLink)&orderBy=name&key=${API_KEY}&pageSize=200`;
+      const res  = await fetch(url);
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+
+      allFiles = (data.files || []).filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      const folders = (data.files || []).filter(f => f.mimeType === 'application/vnd.google-apps.folder');
+
+      document.getElementById('totalFiles').textContent = allFiles.length;
+      document.getElementById('totalFolders').textContent = folders.length;
+
+      const latest = allFiles.reduce((a,b) => new Date(b.modifiedTime) > new Date(a.modifiedTime) ? b : a, allFiles[0]);
+      document.getElementById('lastUpdate').textContent = latest ? formatDate(latest.modifiedTime) : '—';
+
+      renderFiles(allFiles);
+    } catch(e) {
+      document.getElementById('errorBanner').style.display = 'block';
+      document.getElementById('filesGrid').innerHTML = '<div class="state-box"><p>Не можах да заредя файловете.</p><small>Провери API ключа или интернет връзката.</small></div>';
+    }
+  }
+
+  function renderFiles(files) {
+    const grid = document.getElementById('filesGrid');
+    if (!files.length) {
+      grid.innerHTML = '<div class="state-box"><p>Няма намерени файлове.</p></div>';
+      return;
+    }
+
+    grid.innerHTML = files.map((f, i) => {
+      const ext   = getExt(f.name);
+      const cls   = EXT_CLASS[ext] || 'other';
+      const icon  = ICONS[ext] || '📁';
+      const dl    = f.webContentLink || `https://drive.google.com/uc?export=download&id=${f.id}`;
+      const view  = f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`;
+
+      return `
+        <div class="file-card" style="animation-delay:${i*0.04}s">
+          <div class="file-top">
+            <div class="file-icon ${cls}">${icon}</div>
+            <span class="file-type-badge badge-${cls}">${ext || 'файл'}</span>
+          </div>
+          <div class="file-name">${f.name}</div>
+          <div class="file-meta">
+            <span>🕐 ${formatDate(f.modifiedTime)}</span>
+          </div>
+          <a href="${dl}" class="download-btn" target="_blank" download>
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Свали
+          </a>
+        </div>`;
+    }).join('');
+  }
+
+  function filterFiles() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let filtered = allFiles;
+    if (activeFilter !== 'all') filtered = filtered.filter(f => getExt(f.name) === activeFilter || (activeFilter === 'docx' && getExt(f.name) === 'doc') || (activeFilter === 'pptx' && getExt(f.name) === 'ppt') || (activeFilter === 'xlsx' && getExt(f.name) === 'xls'));
+    if (q) filtered = filtered.filter(f => f.name.toLowerCase().includes(q));
+    renderFiles(filtered);
+  }
+
+  function setFilter(type, btn) {
+    activeFilter = type;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterFiles();
+  }
+
+  loadFiles();
+</script>
+</body>
+</html>
