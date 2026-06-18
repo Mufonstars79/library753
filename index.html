@@ -525,7 +525,11 @@
   async function fetchDrive(folderId) {
     const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+trashed=false&fields=files(id,name,mimeType,modifiedTime,webViewLink,webContentLink)&orderBy=name&key=${API_KEY}&pageSize=200`;
     const res = await fetch(url);
-    if (!res.ok) throw new Error(res.status);
+    if (!res.ok) {
+      let detail = '';
+      try { const j = await res.json(); detail = j.error?.message || ''; } catch(_) {}
+      throw new Error(`HTTP ${res.status}${detail ? ': ' + detail : ''}`);
+    }
     return (await res.json()).files || [];
   }
 
@@ -560,8 +564,11 @@
 
       renderFolders(dateFolders);
     } catch(e) {
-      document.getElementById('errorBanner').style.display = 'block';
-      document.getElementById('foldersGrid').innerHTML = '<div class="state-box"><p>Грешка при зареждане.</p></div>';
+      console.error('[library753] init error:', e);
+      const banner = document.getElementById('errorBanner');
+      banner.style.display = 'block';
+      banner.innerHTML = `⚠️ Грешка при зареждане: <strong>${e.message}</strong>. <a href="#" onclick="init();return false;">Опитай отново</a>`;
+      document.getElementById('foldersGrid').innerHTML = `<div class="state-box"><p>Грешка: ${e.message}</p></div>`;
     }
   }
 
@@ -599,7 +606,8 @@
       allFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
       renderFiles(allFiles);
     } catch(e) {
-      document.getElementById('filesGrid').innerHTML = '<div class="state-box"><p>Грешка при зареждане на файловете.</p></div>';
+      console.error('[library753] openFolder error:', e);
+      document.getElementById('filesGrid').innerHTML = `<div class="state-box"><p>Грешка: ${e.message}</p></div>`;
     }
   }
 
