@@ -471,12 +471,10 @@
       <span class="section-title">УЧЕБНИ ПРЕДМЕТИ</span>
     </div>
 
-    <!-- Three subfolder cards -->
     <div id="uchebniCards">
       <div class="folders-grid" id="uchebniGrid"></div>
     </div>
 
-    <!-- Files view for an opened subfolder -->
     <div id="uchebniFiles" style="display:none">
       <button class="back-btn" onclick="backToUchebni()">← Назад към предметите</button>
 
@@ -512,18 +510,19 @@
 
 <script>
   const API_KEY = 'AIzaSyADiLlwS8Vvy4-n8BN9nuWbJFBuPfMBF-Y';
+  const BASE_URL = 'https://mufonstars79.github.io/library753/';
 
   const ZAKONI_ID = '1amsQXXQNtIM9hkV1zJ-YSmzTN4sTToVo';
-
   const UCHEBNI_FOLDERS = [
-    { id: '1pO2MksCvgWwsRW8Ta1BT1KFBHl-mR2tL', name: 'Методика и Авито' },
-    { id: '1gY3wd750g1QBRIdlFHVcyWuVpkbN9pt4', name: 'Педагогическа Практика за Инструктори' },
-    { id: '1FBcKoUyPZsTYj99uaD-zd7s7NPdmu6PF', name: 'Етика на Водача' },
+    { id: '1pO2MksCvgWwsRW8Ta1BT1KFBHl-mR2tL', key: 'metodika',   name: 'Методика и Авито' },
+    { id: '1gY3wd750g1QBRIdlFHVcyWuVpkbN9pt4', key: 'pedagogika', name: 'Педагогическа Практика за Инструктори' },
+    { id: '1FBcKoUyPZsTYj99uaD-zd7s7NPdmu6PF', key: 'etika',      name: 'Етика на Водача' },
   ];
 
   const ICONS = { pdf:'📄', docx:'📝', doc:'📝', pptx:'📊', ppt:'📊', xlsx:'📈', xls:'📈', png:'🖼️', jpg:'🖼️', jpeg:'🖼️', mp4:'🎬', mp3:'🎵', zip:'📦' };
   const EXT_CLASS = { pdf:'pdf', docx:'docx', doc:'docx', pptx:'pptx', ppt:'pptx', xlsx:'xlsx', xls:'xlsx' };
 
+  let manifest = null;
   let zakoniAllFiles = [];
   let zakoniActiveFilter = 'all';
   let uchebniAllFiles = [];
@@ -547,12 +546,42 @@
     return (await res.json()).files || [];
   }
 
+  async function loadManifest() {
+    try {
+      const res = await fetch('./files/manifest.json?_=' + Date.now());
+      if (res.ok) {
+        manifest = await res.json();
+        return true;
+      }
+    } catch(_) {}
+    return false;
+  }
+
+  function manifestToFiles(section) {
+    if (!manifest || !manifest[section]) return [];
+    return manifest[section].map(f => ({
+      name: f.name,
+      modifiedTime: f.modifiedTime,
+      _localPath: f.path,
+      _isLocal: true
+    }));
+  }
+
   function buildFileCard(f, delay) {
     const ext  = getExt(f.name);
     const cls  = EXT_CLASS[ext] || 'other';
     const icon = ICONS[ext] || '📁';
-    const dl   = f.webContentLink || `https://drive.google.com/uc?export=download&id=${f.id}`;
-    const view = f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`;
+
+    let viewUrl, dlUrl;
+    if (f._isLocal) {
+      const encoded = f._localPath.split('/').map(encodeURIComponent).join('/');
+      viewUrl = BASE_URL + encoded;
+      dlUrl   = viewUrl;
+    } else {
+      viewUrl = f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`;
+      dlUrl   = f.webContentLink || `https://drive.google.com/uc?export=download&id=${f.id}`;
+    }
+
     return `<div class="file-card" style="animation-delay:${delay}s">
       <div class="file-top">
         <div class="file-icon ${cls}">${icon}</div>
@@ -561,11 +590,11 @@
       <div class="file-name">${f.name}</div>
       <div class="file-meta">🕐 ${formatDate(f.modifiedTime)}</div>
       <div class="file-actions">
-        <a href="${view}" class="action-btn" target="_blank">
+        <a href="${viewUrl}" class="action-btn" target="_blank">
           <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           Виж
         </a>
-        <a href="${dl}" class="action-btn" target="_blank" download>
+        <a href="${dlUrl}" class="action-btn" target="_blank" download="${f.name}">
           <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Свали
         </a>
@@ -602,8 +631,12 @@
   async function loadZakoni() {
     document.getElementById('zakoniGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
     try {
-      const items = await fetchDrive(ZAKONI_ID);
-      zakoniAllFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      if (manifest && manifest.zakoni) {
+        zakoniAllFiles = manifestToFiles('zakoni');
+      } else {
+        const items = await fetchDrive(ZAKONI_ID);
+        zakoniAllFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      }
       document.getElementById('zakoniCount').textContent = zakoniAllFiles.length + ' файла';
       renderToGrid('zakoniGrid', zakoniAllFiles);
     } catch(e) {
@@ -628,7 +661,7 @@
 
   function renderUchebniFolders() {
     document.getElementById('uchebniGrid').innerHTML = UCHEBNI_FOLDERS.map((f, i) => `
-      <div class="folder-card" style="animation-delay:${i * 0.08}s" onclick="openUchebni('${f.id}', '${f.name.replace(/'/g, "\\'")}')">
+      <div class="folder-card" style="animation-delay:${i * 0.08}s" onclick="openUchebni('${f.id}', '${f.key}', '${f.name.replace(/'/g, "\\'")}')">
         <div class="folder-icon">📂</div>
         <div class="folder-info">
           <div class="folder-name">${f.name}</div>
@@ -639,7 +672,7 @@
     `).join('');
   }
 
-  async function openUchebni(folderId, folderName) {
+  async function openUchebni(folderId, folderKey, folderName) {
     document.getElementById('uchebniCards').style.display = 'none';
     document.getElementById('uchebniFiles').style.display = 'block';
     document.getElementById('uchebniCurrentFolder').textContent = folderName;
@@ -650,8 +683,12 @@
     document.getElementById('uchebniFilesGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
 
     try {
-      const items = await fetchDrive(folderId);
-      uchebniAllFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      if (manifest && manifest[folderKey]) {
+        uchebniAllFiles = manifestToFiles(folderKey);
+      } else {
+        const items = await fetchDrive(folderId);
+        uchebniAllFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      }
       renderToGrid('uchebniFilesGrid', uchebniAllFiles);
     } catch(e) {
       console.error('[library753] openUchebni error:', e);
@@ -676,8 +713,11 @@
     filterUchebni();
   }
 
-  loadZakoni();
-  renderUchebniFolders();
+  // Init: first try to load manifest, then display
+  loadManifest().then(() => {
+    loadZakoni();
+    renderUchebniFolders();
+  });
 </script>
 </body>
 </html>
