@@ -44,7 +44,7 @@
   header {
     padding: 48px 0 32px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 48px;
+    margin-bottom: 56px;
   }
 
   .header-inner {
@@ -114,39 +114,47 @@
     box-shadow: 0 8px 24px rgba(245,200,66,0.3);
   }
 
-  /* Breadcrumb */
-  .breadcrumb {
+  .main-section { margin-bottom: 64px; }
+
+  .section-header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 32px;
-    font-size: 13px;
-    color: var(--muted);
-    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
   }
 
-  .breadcrumb-item {
-    cursor: pointer;
+  .section-icon { font-size: 28px; }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
     color: var(--accent);
-    transition: opacity 0.2s;
+    letter-spacing: -0.5px;
   }
 
-  .breadcrumb-item:hover { opacity: 0.7; }
-  .breadcrumb-sep { color: var(--border); }
-  .breadcrumb-current { color: var(--muted); cursor: default; }
+  .section-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
 
-  /* Filter buttons */
   .controls {
     display: flex;
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
     align-items: center;
   }
 
   .search-wrap {
     flex: 1;
-    min-width: 200px;
+    min-width: 180px;
     position: relative;
   }
 
@@ -165,7 +173,7 @@
     color: var(--text);
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px;
-    padding: 12px 14px 12px 42px;
+    padding: 11px 14px 11px 42px;
     border-radius: 6px;
     outline: none;
     transition: border-color 0.2s;
@@ -174,19 +182,15 @@
   input[type="search"]:focus { border-color: var(--accent); }
   input[type="search"]::placeholder { color: var(--muted); }
 
-  .filter-btns {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+  .filter-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 
   .filter-btn {
-    padding: 10px 16px;
+    padding: 9px 14px;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
     font-family: 'IBM Plex Sans', sans-serif;
     cursor: pointer;
     transition: all 0.2s;
@@ -200,15 +204,18 @@
     background: rgba(245,200,66,0.08);
   }
 
-  /* Grid */
   .files-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 16px;
-    margin-bottom: 48px;
   }
 
-  /* Folder card */
+  .folders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
   .folder-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -229,27 +236,20 @@
     background: rgba(245,200,66,0.05);
   }
 
-  .folder-icon {
-    font-size: 32px;
-    flex-shrink: 0;
-  }
-
+  .folder-icon { font-size: 32px; flex-shrink: 0; }
   .folder-info { flex: 1; }
 
   .folder-name {
     font-family: 'Unbounded', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--text);
     margin-bottom: 4px;
+    line-height: 1.3;
   }
 
-  .folder-meta {
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .folder-meta { font-size: 12px; color: var(--muted); }
 
-  /* File card */
   .file-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -321,16 +321,9 @@
     word-break: break-word;
   }
 
-  .file-meta {
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .file-meta { font-size: 12px; color: var(--muted); }
 
-  .file-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: auto;
-  }
+  .file-actions { display: flex; gap: 8px; margin-top: auto; }
 
   .action-btn {
     display: flex;
@@ -357,21 +350,20 @@
     font-weight: 500;
   }
 
-  /* State boxes */
   .state-box {
     grid-column: 1 / -1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 24px;
+    padding: 60px 24px;
     gap: 16px;
     color: var(--muted);
     text-align: center;
   }
 
   .spinner {
-    width: 40px; height: 40px;
+    width: 36px; height: 36px;
     border: 3px solid var(--border);
     border-top-color: var(--accent);
     border-radius: 50%;
@@ -380,7 +372,6 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Back button */
   .back-btn {
     display: inline-flex;
     align-items: center;
@@ -394,28 +385,23 @@
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
-  .back-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Section title */
-  .section-title {
+  .subfolder-title {
     font-family: 'Unbounded', sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
-    margin-bottom: 24px;
+    color: var(--text);
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
-  .section-title span {
-    color: var(--accent);
-  }
+  .subfolder-title span { color: var(--accent); }
 
   footer {
     border-top: 1px solid var(--border);
@@ -427,15 +413,10 @@
 
   footer a { color: var(--accent); text-decoration: none; }
 
-  .error-banner {
-    background: rgba(232,93,58,0.1);
-    border: 1px solid rgba(232,93,58,0.3);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 24px;
-    font-size: 14px;
-    color: #e85d3a;
-    display: none;
+  @media (max-width: 600px) {
+    .section-title { font-size: 15px; }
+    .folders-grid { grid-template-columns: 1fr; }
+    .filter-btn { padding: 8px 10px; font-size: 10px; }
   }
 </style>
 </head>
@@ -456,42 +437,68 @@
     </div>
   </header>
 
-  <div class="error-banner" id="errorBanner">
-    ⚠️ Грешка при зареждане. <a href="#" onclick="init()">Опитай отново</a>
-  </div>
+  <!-- SECTION 1: ЗАКОНИ И ДОКУМЕНТАЦИЯ -->
+  <div class="main-section">
+    <div class="section-header">
+      <span class="section-icon">📁</span>
+      <span class="section-title">ЗАКОНИ И ДОКУМЕНТАЦИЯ</span>
+      <span class="section-count" id="zakoniCount"></span>
+    </div>
 
-  <div id="mainView">
-    <!-- Folders view -->
-    <div id="foldersSection">
-      <div class="section-title">📁 Папки по дати</div>
-      <div class="files-grid" id="foldersGrid">
-        <div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>
+    <div class="controls">
+      <div class="search-wrap">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="zakoniSearch" placeholder="Търси документ..." oninput="filterZakoni()">
+      </div>
+      <div class="filter-btns" id="zakoniBtns">
+        <button class="filter-btn active" onclick="setZakoniFilter('all', this)">Всички</button>
+        <button class="filter-btn" onclick="setZakoniFilter('pdf', this)">PDF</button>
+        <button class="filter-btn" onclick="setZakoniFilter('docx', this)">Word</button>
+        <button class="filter-btn" onclick="setZakoniFilter('pptx', this)">PowerPoint</button>
+        <button class="filter-btn" onclick="setZakoniFilter('xlsx', this)">Excel</button>
       </div>
     </div>
 
-    <!-- Files view (inside folder) -->
-    <div id="filesSection" style="display:none">
-      <button class="back-btn" onclick="showFolders()">
-        ← Назад към папките
-      </button>
+    <div class="files-grid" id="zakoniGrid">
+      <div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>
+    </div>
+  </div>
 
-      <div class="section-title" id="folderTitle">📂 <span></span></div>
+  <!-- SECTION 2: УЧЕБНИ ПРЕДМЕТИ -->
+  <div class="main-section">
+    <div class="section-header">
+      <span class="section-icon">📁</span>
+      <span class="section-title">УЧЕБНИ ПРЕДМЕТИ</span>
+    </div>
+
+    <!-- Three subfolder cards -->
+    <div id="uchebniCards">
+      <div class="folders-grid" id="uchebniGrid"></div>
+    </div>
+
+    <!-- Files view for an opened subfolder -->
+    <div id="uchebniFiles" style="display:none">
+      <button class="back-btn" onclick="backToUchebni()">← Назад към предметите</button>
+
+      <div class="subfolder-title">
+        📂 <span id="uchebniCurrentFolder"></span>
+      </div>
 
       <div class="controls">
         <div class="search-wrap">
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" id="searchInput" placeholder="Търси файл..." oninput="filterFiles()">
+          <input type="search" id="uchebniSearch" placeholder="Търси файл..." oninput="filterUchebni()">
         </div>
-        <div class="filter-btns" id="filterBtns">
-          <button class="filter-btn active" onclick="setFilter('all', this)">Всички</button>
-          <button class="filter-btn" onclick="setFilter('pdf', this)">PDF</button>
-          <button class="filter-btn" onclick="setFilter('docx', this)">Word</button>
-          <button class="filter-btn" onclick="setFilter('pptx', this)">PowerPoint</button>
-          <button class="filter-btn" onclick="setFilter('xlsx', this)">Excel</button>
+        <div class="filter-btns" id="uchebniFileBtns">
+          <button class="filter-btn active" onclick="setUchebniFilter('all', this)">Всички</button>
+          <button class="filter-btn" onclick="setUchebniFilter('pdf', this)">PDF</button>
+          <button class="filter-btn" onclick="setUchebniFilter('docx', this)">Word</button>
+          <button class="filter-btn" onclick="setUchebniFilter('pptx', this)">PowerPoint</button>
+          <button class="filter-btn" onclick="setUchebniFilter('xlsx', this)">Excel</button>
         </div>
       </div>
 
-      <div class="files-grid" id="filesGrid">
+      <div class="files-grid" id="uchebniFilesGrid">
         <div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>
       </div>
     </div>
@@ -504,16 +511,23 @@
 </div>
 
 <script>
-  // ======= КОНФИГУРАЦИЯ =======
-  const ROOT_FOLDER_ID = '1CbSAvw4hsCsamx6NsybKZ3rQ-tuTfxA1';
   const API_KEY = 'AIzaSyADiLlwS8Vvy4-n8BN9nuWbJFBuPfMBF-Y';
-  // ============================
+
+  const ZAKONI_ID = '1amsQXXQNtIM9hkV1zJ-YSmzTN4sTToVo';
+
+  const UCHEBNI_FOLDERS = [
+    { id: '1pO2MksCvgWwsRW8Ta1BT1KFBHl-mR2tL', name: 'Методика и Авито' },
+    { id: '1gY3wd750g1QBRIdlFHVcyWuVpkbN9pt4', name: 'Педагогическа Практика за Инструктори' },
+    { id: '1FBcKoUyPZsTYj99uaD-zd7s7NPdmu6PF', name: 'Етика на Водача' },
+  ];
 
   const ICONS = { pdf:'📄', docx:'📝', doc:'📝', pptx:'📊', ppt:'📊', xlsx:'📈', xls:'📈', png:'🖼️', jpg:'🖼️', jpeg:'🖼️', mp4:'🎬', mp3:'🎵', zip:'📦' };
   const EXT_CLASS = { pdf:'pdf', docx:'docx', doc:'docx', pptx:'pptx', ppt:'pptx', xlsx:'xlsx', xls:'xlsx' };
 
-  let allFiles = [];
-  let activeFilter = 'all';
+  let zakoniAllFiles = [];
+  let zakoniActiveFilter = 'all';
+  let uchebniAllFiles = [];
+  let uchebniActiveFilter = 'all';
 
   function getExt(name) { return (name.split('.').pop() || '').toLowerCase(); }
 
@@ -533,149 +547,137 @@
     return (await res.json()).files || [];
   }
 
-  async function init() {
-    document.getElementById('errorBanner').style.display = 'none';
-    document.getElementById('foldersGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
+  function buildFileCard(f, delay) {
+    const ext  = getExt(f.name);
+    const cls  = EXT_CLASS[ext] || 'other';
+    const icon = ICONS[ext] || '📁';
+    const dl   = f.webContentLink || `https://drive.google.com/uc?export=download&id=${f.id}`;
+    const view = f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`;
+    return `<div class="file-card" style="animation-delay:${delay}s">
+      <div class="file-top">
+        <div class="file-icon ${cls}">${icon}</div>
+        <span class="file-type-badge badge-${cls}">${ext || 'файл'}</span>
+      </div>
+      <div class="file-name">${f.name}</div>
+      <div class="file-meta">🕐 ${formatDate(f.modifiedTime)}</div>
+      <div class="file-actions">
+        <a href="${view}" class="action-btn" target="_blank">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Виж
+        </a>
+        <a href="${dl}" class="action-btn" target="_blank" download>
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Свали
+        </a>
+      </div>
+    </div>`;
+  }
 
+  function applyFilter(files, filter, query) {
+    let result = files;
+    if (filter !== 'all') {
+      result = result.filter(f => {
+        const ext = getExt(f.name);
+        if (filter === 'docx') return ext === 'docx' || ext === 'doc';
+        if (filter === 'pptx') return ext === 'pptx' || ext === 'ppt';
+        if (filter === 'xlsx') return ext === 'xlsx' || ext === 'xls';
+        return ext === filter;
+      });
+    }
+    if (query) result = result.filter(f => f.name.toLowerCase().includes(query));
+    return result;
+  }
+
+  function renderToGrid(gridId, files) {
+    const grid = document.getElementById(gridId);
+    if (!files.length) {
+      grid.innerHTML = '<div class="state-box"><p>Няма намерени файлове.</p></div>';
+      return;
+    }
+    grid.innerHTML = files.map((f, i) => buildFileCard(f, i * 0.04)).join('');
+  }
+
+  // ── ЗАКОНИ И ДОКУМЕНТАЦИЯ ──
+
+  async function loadZakoni() {
+    document.getElementById('zakoniGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
     try {
-      // Load root folder contents
-      const rootItems = await fetchDrive(ROOT_FOLDER_ID);
-      const subFolders = rootItems.filter(f => f.mimeType === 'application/vnd.google-apps.folder');
-
-      // If there are subfolders, load their subfolders too (1create1980 level)
-      let dateFolders = [];
-      if (subFolders.length > 0) {
-        for (const sf of subFolders) {
-          const items = await fetchDrive(sf.id);
-          const df = items.filter(f => f.mimeType === 'application/vnd.google-apps.folder');
-          if (df.length > 0) {
-            dateFolders = dateFolders.concat(df);
-          } else {
-            // The subfolder itself contains files — treat as date folder
-            dateFolders.push(sf);
-          }
-        }
-      }
-
-      // If no nested folders, treat root items directly
-      if (dateFolders.length === 0) {
-        dateFolders = subFolders;
-      }
-
-      renderFolders(dateFolders);
+      const items = await fetchDrive(ZAKONI_ID);
+      zakoniAllFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      document.getElementById('zakoniCount').textContent = zakoniAllFiles.length + ' файла';
+      renderToGrid('zakoniGrid', zakoniAllFiles);
     } catch(e) {
-      console.error('[library753] init error:', e);
-      const banner = document.getElementById('errorBanner');
-      banner.style.display = 'block';
-      banner.innerHTML = `⚠️ Грешка при зареждане: <strong>${e.message}</strong>. <a href="#" onclick="init();return false;">Опитай отново</a>`;
-      document.getElementById('foldersGrid').innerHTML = `<div class="state-box"><p>Грешка: ${e.message}</p></div>`;
+      console.error('[library753] loadZakoni error:', e);
+      document.getElementById('zakoniGrid').innerHTML = `<div class="state-box"><p>Грешка: ${e.message}</p></div>`;
     }
   }
 
-  function renderFolders(folders) {
-    const grid = document.getElementById('foldersGrid');
-    if (!folders.length) {
-      grid.innerHTML = '<div class="state-box"><p>Няма намерени папки.</p></div>';
-      return;
-    }
+  function filterZakoni() {
+    const q = document.getElementById('zakoniSearch').value.toLowerCase();
+    renderToGrid('zakoniGrid', applyFilter(zakoniAllFiles, zakoniActiveFilter, q));
+  }
 
-    grid.innerHTML = folders.map((f, i) => `
-      <div class="folder-card" style="animation-delay:${i*0.05}s" onclick="openFolder('${f.id}', '${f.name.replace(/'/g,"\\'")}')">
+  function setZakoniFilter(type, btn) {
+    zakoniActiveFilter = type;
+    document.querySelectorAll('#zakoniBtns .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterZakoni();
+  }
+
+  // ── УЧЕБНИ ПРЕДМЕТИ ──
+
+  function renderUchebniFolders() {
+    document.getElementById('uchebniGrid').innerHTML = UCHEBNI_FOLDERS.map((f, i) => `
+      <div class="folder-card" style="animation-delay:${i * 0.08}s" onclick="openUchebni('${f.id}', '${f.name.replace(/'/g, "\\'")}')">
         <div class="folder-icon">📂</div>
         <div class="folder-info">
           <div class="folder-name">${f.name}</div>
-          <div class="folder-meta">Промяна: ${formatDate(f.modifiedTime)}</div>
+          <div class="folder-meta">Щракни за да отвориш</div>
         </div>
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color:var(--muted);flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg>
       </div>
     `).join('');
   }
 
-  async function openFolder(folderId, folderName) {
-    document.getElementById('foldersSection').style.display = 'none';
-    document.getElementById('filesSection').style.display = 'block';
-    document.querySelector('#folderTitle span').textContent = folderName;
-    document.getElementById('filesGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
-    document.getElementById('searchInput').value = '';
-    activeFilter = 'all';
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.filter-btn')[0].classList.add('active');
+  async function openUchebni(folderId, folderName) {
+    document.getElementById('uchebniCards').style.display = 'none';
+    document.getElementById('uchebniFiles').style.display = 'block';
+    document.getElementById('uchebniCurrentFolder').textContent = folderName;
+    document.getElementById('uchebniSearch').value = '';
+    uchebniActiveFilter = 'all';
+    document.querySelectorAll('#uchebniFileBtns .filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#uchebniFileBtns .filter-btn')[0].classList.add('active');
+    document.getElementById('uchebniFilesGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>';
 
     try {
       const items = await fetchDrive(folderId);
-      allFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
-      renderFiles(allFiles);
+      uchebniAllFiles = items.filter(f => f.mimeType !== 'application/vnd.google-apps.folder');
+      renderToGrid('uchebniFilesGrid', uchebniAllFiles);
     } catch(e) {
-      console.error('[library753] openFolder error:', e);
-      document.getElementById('filesGrid').innerHTML = `<div class="state-box"><p>Грешка: ${e.message}</p></div>`;
+      console.error('[library753] openUchebni error:', e);
+      document.getElementById('uchebniFilesGrid').innerHTML = `<div class="state-box"><p>Грешка: ${e.message}</p></div>`;
     }
   }
 
-  function showFolders() {
-    document.getElementById('filesSection').style.display = 'none';
-    document.getElementById('foldersSection').style.display = 'block';
+  function backToUchebni() {
+    document.getElementById('uchebniFiles').style.display = 'none';
+    document.getElementById('uchebniCards').style.display = 'block';
   }
 
-  function renderFiles(files) {
-    const grid = document.getElementById('filesGrid');
-    if (!files.length) {
-      grid.innerHTML = '<div class="state-box"><p>Няма намерени файлове.</p></div>';
-      return;
-    }
-
-    grid.innerHTML = files.map((f, i) => {
-      const ext  = getExt(f.name);
-      const cls  = EXT_CLASS[ext] || 'other';
-      const icon = ICONS[ext] || '📁';
-      const dl   = f.webContentLink || `https://drive.google.com/uc?export=download&id=${f.id}`;
-      const view = f.webViewLink || `https://drive.google.com/file/d/${f.id}/view`;
-
-      return `
-        <div class="file-card" style="animation-delay:${i*0.04}s">
-          <div class="file-top">
-            <div class="file-icon ${cls}">${icon}</div>
-            <span class="file-type-badge badge-${cls}">${ext || 'файл'}</span>
-          </div>
-          <div class="file-name">${f.name}</div>
-          <div class="file-meta">🕐 ${formatDate(f.modifiedTime)}</div>
-          <div class="file-actions">
-            <a href="${view}" class="action-btn" target="_blank">
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              Виж
-            </a>
-            <a href="${dl}" class="action-btn" target="_blank" download>
-              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Свали
-            </a>
-          </div>
-        </div>`;
-    }).join('');
+  function filterUchebni() {
+    const q = document.getElementById('uchebniSearch').value.toLowerCase();
+    renderToGrid('uchebniFilesGrid', applyFilter(uchebniAllFiles, uchebniActiveFilter, q));
   }
 
-  function filterFiles() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    let filtered = allFiles;
-    if (activeFilter !== 'all') {
-      filtered = filtered.filter(f => {
-        const ext = getExt(f.name);
-        if (activeFilter === 'docx') return ext === 'docx' || ext === 'doc';
-        if (activeFilter === 'pptx') return ext === 'pptx' || ext === 'ppt';
-        if (activeFilter === 'xlsx') return ext === 'xlsx' || ext === 'xls';
-        return ext === activeFilter;
-      });
-    }
-    if (q) filtered = filtered.filter(f => f.name.toLowerCase().includes(q));
-    renderFiles(filtered);
-  }
-
-  function setFilter(type, btn) {
-    activeFilter = type;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  function setUchebniFilter(type, btn) {
+    uchebniActiveFilter = type;
+    document.querySelectorAll('#uchebniFileBtns .filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    filterFiles();
+    filterUchebni();
   }
 
-  init();
+  loadZakoni();
+  renderUchebniFolders();
 </script>
 </body>
 </html>
