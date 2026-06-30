@@ -457,10 +457,124 @@
 
   footer a { color: var(--accent); text-decoration: none; }
 
+  .paid-section {
+    border: 1px solid rgba(245,200,66,0.3);
+    border-radius: 12px;
+    padding: 28px;
+    background: linear-gradient(135deg, rgba(245,200,66,0.05), rgba(232,93,58,0.03));
+  }
+
+  .paid-badge {
+    display: inline-block;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #0a0a0f;
+    background: var(--accent);
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .paid-box {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .paid-info { flex: 1; min-width: 260px; }
+
+  .paid-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .paid-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .paid-list li {
+    font-size: 13px;
+    color: var(--text);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .paid-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .paid-note {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .paid-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    min-width: 160px;
+  }
+
+  .paid-price {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .buy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .buy-btn:hover {
+    background: #ffd94d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(245,200,66,0.4);
+  }
+
+  .paid-secure {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+  }
+
   @media (max-width: 600px) {
     .section-title { font-size: 15px; }
     .folders-grid { grid-template-columns: 1fr; }
     .filter-btn { padding: 8px 10px; font-size: 10px; }
+    .paid-box { flex-direction: column; }
+    .paid-cta { width: 100%; }
   }
 </style>
 </head>
@@ -505,6 +619,38 @@
 
     <div class="files-grid" id="zakoniGrid">
       <div class="state-box"><div class="spinner"></div><p>Зареждане…</p></div>
+    </div>
+  </div>
+
+  <!-- SECTION PAID: МЕТОДИКА И АВИТО -->
+  <div class="main-section paid-section">
+    <div class="paid-badge">💳 ПЛАТЕН КУРС</div>
+    <div class="section-header">
+      <span class="section-icon">📚</span>
+      <h2 class="section-title">Методика и АВИТО — Пълен курс (ПС 1-8)</h2>
+    </div>
+    <div class="paid-box">
+      <div class="paid-info">
+        <p class="paid-desc">Пълен комплект разработени теми по Методика и АВИТО за Курс 753:</p>
+        <ul class="paid-list">
+          <li>ПС 1 — Предмет, цели и задачи на методиката</li>
+          <li>ПС 2 — Методика на проектиране на обучението</li>
+          <li>ПС 3 — Методика за дефиниране на учебните цели</li>
+          <li>ПС 4.1 / 4.2 — Подбор и учебно съдържание</li>
+          <li>ПС 5 / 5.1 — Методи и интерактивни методи в обучението</li>
+          <li>ПС 6.1 / 6.3 — Средства и дидактически тестове</li>
+          <li>ПС 7.1 / 7.2 — Организационни форми и групово обучение</li>
+          <li>ПС 8 — Методи за контрол и оценка</li>
+        </ul>
+        <p class="paid-note">След плащане получавате линк за незабавно сваляне на всички материали.</p>
+      </div>
+      <div class="paid-cta">
+        <div class="paid-price">€10</div>
+        <a href="https://payhip.com/b/NA6WO" target="_blank" class="buy-btn">
+          🛒 Купи и свали
+        </a>
+        <p class="paid-secure">🔒 Сигурно плащане чрез PayPal</p>
+      </div>
     </div>
   </div>
 
